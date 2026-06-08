@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  printf 'Error: ffmpeg is required for conversion. Install with: brew install ffmpeg\n' >&2
+  exit 1
+fi
+
+get_file_size() {
+  local file="$1"
+
+  if stat -f%z "$file" >/dev/null 2>&1; then
+    stat -f%z "$file"
+  else
+    stat -c%s "$file"
+  fi
+}
+
+get_dimensions() {
+  local file="$1"
+
+  if command -v ffprobe >/dev/null 2>&1; then
+    ffprobe -v error \
+      -select_streams v:0 \
+      -show_entries stream=width,height \
+      -of csv=s=x:p=0 \
+      "$file"
+    return
+  fi
+
+  if command -v mdls >/dev/null 2>&1; then
+    local width height
+    width="$(mdls -raw -name kMDItemPixelWidth "$file" 2>/dev/null || true)"
+    height="$(mdls -raw -name kMDItemPixelHeight "$file" 2>/dev/null || true)"
+
+    if [[ -n "$width" && -n "$height" && "$width" != "(null)" && "$height" != "(null)" ]]; then
+      printf '%sx%s\n' "$width" "$height"
+      return
+    fi
+  fi
+
+  printf 'unknown\n'
+}
+
+shopt -s nullglob nocaseglob
+mov_files=("$script_dir"/*.mov)
+
+if [[ "${#mov_files[@]}" -eq 0 ]]; then
+  printf 'No .mov files found in %s\n' "$script_dir"
+  exit 0
+fi
+
+printf 'input_file\tdimensions\tinput_filesize_bytes\tinput_extension\toutput_file\tstatus\n'
+
+for file in "${mov_files[@]}"; do
+  filename="$(basename "$file")"
+  extension="${filename##*.}"
+  dimensions="$(get_dimensions "$file")"
+  filesize="$(get_file_size "$file")"
+  output="${file%.*}.mp4"
+  output_filename="$(basename "$output")"
+
+  if [[ -e "$output" ]]; then
+    printf '%s\t%s\t%s\t%s\t%s\tskipped_existing\n' \
+      "$filename" "$dimensions" "$filesize" "$extension" "$output_filename"
+    continue
+  fi
+
+  printf '%s\t%s\t%s\t%s\t%s\tconverting\n' \
+    "$filename" "$dimensions" "$filesize" "$extension" "$output_filename"
+
+  ffmpeg -hide_banner -loglevel error \
+    -i "$file" \
+    -c:v libx264 \
+    -preset medium \
+    -crf 23 \
+    -pix_fmt yuv420p \
+    -movflags +faststart \
+    -c:a aac \
+    -b:a 128k \
+    "$output"
+
+  printf '%s\t%s\t%s\t%s\t%s\tconverted\n' \
+    "$filename" "$dimensions" "$filesize" "$extension" "$output_filename"
+done

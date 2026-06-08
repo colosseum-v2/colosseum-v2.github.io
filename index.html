@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Colosseum V2 is a GPU-parallelized benchmark for evaluating Vision-Language-Action model generalization across visual, language, and action perturbations.">
+  <meta name="keywords" content="Colosseum V2, robotics, Vision-Language-Action models, VLA, imitation learning, benchmark, generalization, ManiSkill">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Colosseum V2: Benchmarking Generalization for Vision Language Action Models</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    .hero.is-colosseum {
+      background: linear-gradient(135deg, #f6f8ff 0%, #eef7f4 45%, #ffffff 100%);
+    }
+
+    .stat-card,
+    .feature-card,
+    .task-card,
+    .result-card {
+      height: 100%;
+      border: 1px solid #e7e7e7;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(10, 10, 10, 0.05);
+    }
+
+    .stat-card {
+      padding: 1.5rem;
+      background: #ffffff;
+    }
+
+    .stat-card.is-compact {
+      padding: 1.5rem 0.75rem 1rem;
+    }
+
+    .stat-card.is-compact .heading {
+      font-size: 0.68rem;
+      line-height: 1.25;
+    }
+
+    .stat-number {
+      color: #3273dc;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .tag-list .tag {
+      margin: 0.25rem;
+    }
+
+    .benchmark-name {
+      font-variant: small-caps;
+      letter-spacing: 0.02em;
+    }
+
+    .section-divider {
+      border-top: 1px solid #eeeeee;
+      margin: 2rem 0;
+    }
+
+    .table-container table td,
+    .table-container table th {
+      vertical-align: middle;
+    }
+
+    .pdf-viewer {
+      width: 100%;
+      height: 55vh;
+      min-height: 420px;
+      border: 1px solid #e7e7e7;
+    }
+
+    .pdf-viewer-wrapper.is-hidden {
+      display: none;
+    }
+
+    .hardware-video {
+      width: 100%;
+      max-height: 540px;
+      background: #000000;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#abstract">Abstract</a>
+      <a class="navbar-item" href="#benchmark">Benchmark</a>
+      <a class="navbar-item" href="#results">Results</a>
+      <a class="navbar-item" href="#appendix">Appendix</a>
+      <a class="navbar-item" href="#BibTeX">BibTeX</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero is-colosseum">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            Colosseum V2:<br>
+            Benchmarking Generalization for Vision Language Action Models
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="http://jeremymorgan.io/">Jeremy Morgan</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://prajwal-vijay.github.io/">Prajwal Vijay</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://leehakho.github.io/">Hyeonho Oh</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://github.com/Geeksongs">Jincen Song</a><sup>3</sup>,</span>
+            <span class="author-block">Ashvin Arora<sup>1</sup>,</span>
+            <span class="author-block">Alina Du<sup>1</sup>,</span>
+            <span class="author-block"><a href="https://uscresl.org/principal-investigator/">Gaurav S. Sukhatme</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://jessethomason.com/">Jesse Thomason</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://ishikasingh.github.io/">Ishika Singh</a><sup>1</sup></span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Southern California,</span>
+            <span class="author-block"><sup>2</sup>Indian Institute of Technology Madras,</span>
+            <span class="author-block"><sup>3</sup>Columbia University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!--  -->
+              <span class="link-block">
+                <a href="#BibTeX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-quote-right"></i>
+                  </span>
+                  <span>Cite</span>
+                </a>
+              </span>
+              <!--  -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2605.27759v1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!--  -->
+              <span class="link-block">
+                <a href="https://github.com/jstmn/ColosseumV2"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>GitHub</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <figure class="image mb-5 mt-5">
+        <img src="content/ColosseumV2_hero.jpg"
+             alt="Overview of Colosseum V2 tasks and perturbations."
+             style="box-shadow: 0 10px 30px rgba(10, 10, 10, 0.08);">
+      </figure>
+      <h2 class="subtitle has-text-centered">
+        A large-scale, GPU-parallelized simulation benchmark for measuring how Vision-Language-Action
+        policies generalize across visual changes, language rephrasings, action perturbations, and
+        robot morphologies.
+      </h2>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <div class="stat-card">
+            <div class="stat-number">28</div>
+            <p class="heading">Manipulation Tasks</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="stat-card">
+            <div class="stat-number">13</div>
+            <p class="heading">Task Categories</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="stat-card">
+            <div class="stat-number">16</div>
+            <p class="heading">Perturbation Factors</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="stat-card">
+            <div class="stat-number">2</div>
+            <p class="heading">Robot Morphologies</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="stat-card is-compact">
+            <div class="stat-number">26x</div>
+            <p class="heading">Sim Steps / Sec compared to Colosseum</p>
+            <!-- <p class="is-size-7"></p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Vision-Language-Action (VLA) models demonstrate promising generalization in robotic
+            manipulation, driven by advances in large-scale vision and language pre-training. This
+            progress can be misleading: despite strong zero-shot perception and language capabilities,
+            task performance often degrades under distribution shifts, revealing gaps in how these
+            systems translate high-level understanding into robust behavior.
+          </p>
+          <p>
+            We introduce Colosseum V2, a large-scale simulation
+            benchmark for evaluating VLA generalization across diverse conditions. The benchmark
+            comprises 28 tasks spanning 13 task categories and two robot morphologies, covering a wide
+            range of manipulation primitives and long-horizon behaviors. Built on ManiSkill,
+            Colosseum V2 enables fast, GPU-parallelized evaluation
+            and supports both in-domain and out-of-domain testing at scale.
+          </p>
+          <p>
+            We evaluate state-of-the-art methods, including Action Chunking Transformers (ACT) and
+            &pi;<sub>0.5</sub>, and reveal limitations in both base performance and generalization. Hardware
+            experiments show strong correlations between simulation and real-world metrics, supporting
+            the benchmark's ecological validity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="benchmark">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Benchmark Design</h2>
+        <div class="content has-text-justified">
+          <p>
+            Colosseum V2 evaluates generalization along visual,
+            language, and action axes. It uses two Franka Panda setups: a single-arm manipulator with
+            a parallel-jaw gripper and a bimanual configuration with two Panda arms operating in a
+            shared workspace. Tasks are organized from simple manipulation primitives through
+            temporally extended, long-horizon behaviors.
+          </p>
+        </div>
+
+        <div class="columns">
+          <div class="column">
+            <div class="box task-card">
+              <h3 class="title is-4">Single-Arm PJG</h3>
+              <div class="content">
+                <p>
+                  Sixteen tasks cover picking, pick-and-place, reorientation, insertion, tool use,
+                  articulated object interaction, and long-horizon manipulation.
+                </p>
+                <p class="tag-list">
+                  <span class="tag is-link is-light">RaiseCube</span>
+                  <span class="tag is-link is-light">PickSodaFromCabinet</span>
+                  <span class="tag is-link is-light">PickDishFromRack</span>
+                  <span class="tag is-link is-light">StackCube</span>
+                  <span class="tag is-link is-light">PlaceBookInShelf</span>
+                  <span class="tag is-link is-light">PlaceDishInRack</span>
+                  <span class="tag is-link is-light">LiftPegUpright</span>
+                  <span class="tag is-link is-light">RotateArrow</span>
+                  <span class="tag is-link is-light">PegInsertionSide</span>
+                  <span class="tag is-link is-light">PlugCharger</span>
+                  <span class="tag is-link is-light">HammerNail</span>
+                  <span class="tag is-link is-light">ScoopBanana</span>
+                  <span class="tag is-link is-light">OpenDrawer</span>
+                  <span class="tag is-link is-light">OpenCabinet</span>
+                  <span class="tag is-link is-light">PlaceCubeInDrawer</span>
+                  <span class="tag is-link is-light">CookItemInPan</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="box task-card">
+              <h3 class="title is-4">Bimanual PJG</h3>
+              <div class="content">
+                <p>
+                  Twelve tasks test handovers, cooperative lifting, reorientation, insertion,
+                  articulated object interaction, and long-horizon dual-arm coordination.
+                </p>
+                <p class="tag-list">
+                  <span class="tag is-primary is-light">DualArmCubeHandover</span>
+                  <span class="tag is-primary is-light">DualArmBottleHandover</span>
+                  <span class="tag is-primary is-light">DualArmLiftPot</span>
+                  <span class="tag is-primary is-light">DualArmLiftTray</span>
+                  <span class="tag is-primary is-light">DualArmPushBox</span>
+                  <span class="tag is-primary is-light">DualArmPourPot</span>
+                  <span class="tag is-primary is-light">DualArmThreading</span>
+                  <span class="tag is-primary is-light">DualArmPenCap</span>
+                  <span class="tag is-primary is-light">DualArmDrawerPlace</span>
+                  <span class="tag is-primary is-light">DualArmDrawerOpen</span>
+                  <span class="tag is-primary is-light">DualArmStackCube</span>
+                  <span class="tag is-primary is-light">DualArmStackTwoCubes</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3 class="title is-4">Perturbation Axes</h3>
+        <div class="columns">
+          <div class="column is-one-third">
+            <div class="box feature-card">
+              <h4 class="title is-5">Visual</h4>
+              <p class="tag-list">
+                <span class="tag is-info is-light">MO Color</span>
+                <span class="tag is-info is-light">RO Color</span>
+                <span class="tag is-info is-light">MO Texture</span>
+                <span class="tag is-info is-light">RO Texture</span>
+                <span class="tag is-info is-light">Table Color</span>
+                <span class="tag is-info is-light">Light Color</span>
+                <span class="tag is-info is-light">Table Texture</span>
+                <span class="tag is-info is-light">Camera Pose</span>
+                <span class="tag is-info is-light">Distractor Object</span>
+                <span class="tag is-info is-light">Background Texture</span>
+                <span class="tag is-info is-light">Background Color</span>
+              </p>
+            </div>
+          </div>
+          <div class="column is-two-thirds">
+            <div class="columns">
+              <div class="column">
+                <div class="box feature-card">
+                  <h4 class="title is-5">Language</h4>
+                  <p class="tag-list">
+                    <span class="tag is-warning is-light">Language</span>
+                  </p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="box feature-card">
+                  <h4 class="title is-5">Action</h4>
+                  <p class="tag-list">
+                    <span class="tag is-danger is-light">MO Size</span>
+                    <span class="tag is-danger is-light">RO Size</span>
+                    <span class="tag is-danger is-light">Pose Randomization</span>
+                  </p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="box feature-card">
+                  <h4 class="title is-5">Combined</h4>
+                  <p class="tag-list">
+                    <span class="tag is-dark is-light">All Perturbations</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="content has-text-justified">
+          <p>
+            Combined perturbations apply all factors simultaneously, representing the most challenging
+            out-of-distribution setting. Demonstrations are generated by expert motion-planning solvers
+            with privileged simulator state, while policies receive RGB observations from external and
+            wrist-mounted cameras.
+          </p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section has-background-light" id="evaluation">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Evaluation Protocol</h2>
+        <div class="content has-text-justified">
+          <p>
+            The benchmark provides initial evaluations of two language-conditioned imitation learning
+            models: ACT and &pi;<sub>0.5</sub>. Models are trained separately for the single-arm and bimanual test
+            suites using 100 perturbation-free demonstrations per task, then evaluated on each
+            perturbation individually over 200 episodes.
+          </p>
+          <p>
+            GPU-parallelized simulation makes the evaluation statistically thorough without making it
+            prohibitively slow. On a single RTX 4090, ACT can be evaluated on both test suites in
+            11.5 hours while producing ten times as many success-rate measurements as the original
+            Colosseum evaluation setup.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="results">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Results and Analysis</h2>
+        <figure class="image mb-5">
+          <img src="content/ColosseumV2_mean_SR_change_2.jpg"
+               alt="Average change in success rate for each perturbation.">
+        </figure>
+        <figure class="image mb-5" style="max-width: 80%; margin-left: auto; margin-right: auto;">
+          <img src="content/radial_two_plots_v2.png"
+               alt="Overall generalization results across vision, language, and action perturbations.">
+        </figure>
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <div class="box result-card">
+              <h3 class="title is-4">Visual Generalization</h3>
+              <p>
+                ACT shows larger average success-rate drops under visual perturbations than &pi;<sub>0.5</sub>:
+                28.57% and 29.06% on the single-arm and bimanual suites, compared with 7.73% and
+                9.86% for &pi;<sub>0.5</sub>. The paper hypothesizes that &pi;<sub>0.5</sub> benefits from larger pretrained
+                visual representations.
+              </p>
+            </div>
+          </div>
+
+          <div class="column is-half">
+            <div class="box result-card">
+              <h3 class="title is-4">Language Generalization</h3>
+              <p>
+                ACT is nearly invariant to language rephrasings, with average drops of 0.28% and
+                -0.57%. &pi;<sub>0.5</sub> drops 19.16% and 24.0%, suggesting that fine-tuning the whole model can
+                reduce robustness to semantically equivalent instructions.
+              </p>
+            </div>
+          </div>
+
+          <div class="column is-half">
+            <div class="box result-card">
+              <h3 class="title is-4">Action Generalization</h3>
+              <p>
+                Pose randomization is a primary challenge for both model families, especially in
+                bimanual tasks where the action space and coordination demands are larger.
+              </p>
+            </div>
+          </div>
+
+          <div class="column is-half">
+            <div class="box result-card">
+              <h3 class="title is-4">Base Success Rates</h3>
+              <p>
+                ACT achieves higher perturbation-free success rates than &pi;<sub>0.5</sub> on both suites,
+                suggesting a tradeoff between task-specific proficiency and broader robustness.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Across morphologies, perturbations have remarkably consistent effects. The average change
+            in mean absolute success-rate drop between single-arm and bimanual suites is 10.83% for
+            ACT and 3.69% for &pi;<sub>0.5</sub>, indicating that perturbation factors expose model-specific
+            generalization behavior rather than only task-specific artifacts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section has-background-light" id="hardware">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Hardware Validation</h2>
+        <div class="box">
+          <div class="field">
+            <label class="label" for="hardware-video-select">Hardware Video</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select id="hardware-video-select">
+                  <option value="content/hardware_videos/LiftPegUpright__mocolor__fail.mp4">LiftPegUpright - MO Color - Fail</option>
+                  <option value="content/hardware_videos/LiftPegUpright__mocolor__success.mp4">LiftPegUpright - MO Color - Success</option>
+                  <option value="content/hardware_videos/RaiseCube__distractor__fail.mp4">RaiseCube - Distractor - Fail</option>
+                  <option value="content/hardware_videos/RaiseCube__distractor__success.mp4">RaiseCube - Distractor - Success</option>
+                  <option value="content/hardware_videos/RaiseCube__lighting__fail.mp4">RaiseCube - Lighting - Fail</option>
+                  <option value="content/hardware_videos/RaiseCube__lighting__success.mp4">RaiseCube - Lighting - Success</option>
+                  <option value="content/hardware_videos/RaiseCube__mocolor__fail.mp4">RaiseCube - MO Color - Fail</option>
+                  <option value="content/hardware_videos/RaiseCube__mosize__fail.mp4">RaiseCube - MO Size - Fail</option>
+                  <option value="content/hardware_videos/RaiseCube__mosize__success.mp4">RaiseCube - MO Size - Success</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <video id="hardware-video-player"
+                 class="hardware-video"
+                 controls
+                 muted
+                 playsinline
+                 preload="metadata">
+            <source id="hardware-video-source"
+                    src="content/hardware_videos/LiftPegUpright__mocolor__fail.mp4"
+                    type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="columns is-vcentered">
+          <div class="column is-half">
+            <figure class="image">
+              <img src="content/hardware_vs_sim.png"
+                   alt="Simulation versus hardware success rate comparison.">
+            </figure>
+            <p class="is-size-7 has-text-centered mt-3">
+              Markers denote perturbations: &bull; (None), &#9670; (MO Color),
+              &#9632; (Light Color), &#9650; (Distractor Object), + (Background Color),
+              and rotated + (MO Size).
+            </p>
+          </div>
+          <div class="column is-half">
+            <div class="content has-text-justified">
+              <p>
+                To assess sim-to-real transfer, the benchmark recreates three single-arm tasks on real
+                hardware: RaiseCube, RotateArrow, and LiftPegUpright. A multi-task ACT policy is trained
+                from scratch with 60 demonstrations per task and evaluated under no perturbation,
+                manipulation-object size, manipulation-object color, background color, and lighting
+                changes.
+              </p>
+              <p>
+                Simulation does not perfectly predict absolute hardware success rates, but it strongly
+                predicts relative degradation under perturbations. The average R-squared for predicting
+                success-rate change is 0.798, and the average Spearman correlation is 0.916, indicating
+                that the ordering of perturbation difficulty is largely preserved between simulation and
+                hardware.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="appendix">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Appendix</h2>
+    <div class="content">
+      <p>
+        If your browser does not display PDFs inline,
+        <a href="content/Colosseum_v2__appendix.pdf">open the appendix PDF directly</a>.
+      </p>
+    </div>
+    <button id="appendix-toggle"
+            class="button is-normal is-rounded is-dark mb-4"
+            type="button"
+            aria-controls="appendix-pdf"
+            aria-expanded="false">
+      Show Appendix PDF
+    </button>
+    <div id="appendix-pdf" class="pdf-viewer-wrapper is-hidden">
+      <iframe class="pdf-viewer"
+              src="content/Colosseum_v2__appendix.pdf"
+              title="Colosseum V2 Appendix PDF">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{morgan2026colosseumv2benchmarkinggeneralization,
+      title={Colosseum V2: Benchmarking Generalization for Vision Language Action Models}, 
+      author={Jeremy Morgan and Prajwal Vijay and Hyeonho Oh and Jincen Song and Ashvin Arora and Alina Du and Gaurav Sukhatme and Jesse Thomason and Ishika Singh},
+      year={2026},
+      eprint={2605.27759},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2605.27759}, 
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is adapted from the
+            <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page template</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const appendixToggle = document.getElementById('appendix-toggle');
+  const appendixPdf = document.getElementById('appendix-pdf');
+
+  if (appendixToggle && appendixPdf) {
+    appendixToggle.addEventListener('click', () => {
+      const isHidden = appendixPdf.classList.toggle('is-hidden');
+      appendixToggle.setAttribute('aria-expanded', String(!isHidden));
+      appendixToggle.textContent = isHidden ? 'Show Appendix PDF' : 'Hide Appendix PDF';
+    });
+  }
+
+  const hardwareVideoSelect = document.getElementById('hardware-video-select');
+  const hardwareVideoPlayer = document.getElementById('hardware-video-player');
+  const hardwareVideoSource = document.getElementById('hardware-video-source');
+
+  if (hardwareVideoSelect && hardwareVideoPlayer && hardwareVideoSource) {
+    hardwareVideoSelect.addEventListener('change', () => {
+      hardwareVideoSource.src = hardwareVideoSelect.value;
+      hardwareVideoPlayer.load();
+      hardwareVideoPlayer.play().catch(() => {
+        // Browsers may block autoplay after source changes; controls remain available.
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
