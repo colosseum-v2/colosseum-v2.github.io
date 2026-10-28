@@ -692,7 +692,10 @@
             </li>
             <li>
               <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
-              Nearly negligible change in task performance, suggesting that, like <span class="model-name" data-model="ACT">ACT</span>, it largely ignores the language component.
+              Language perturbations change success rates on individual tasks, but not consistently downward
+              (e.g., RaiseCube drops from 90.5% to 72.5% with no instruction, while PickDishFromRack rises from 60.5% to 97%), so the average change is small.
+              Unlike <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, its performance does not collapse when the instruction departs from training.
+              One possible reason is that only the action expert of <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was fine-tuned, whereas <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> was fully fine-tuned.
             </li>
           </ul>
         </div>
