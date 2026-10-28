@@ -102,35 +102,32 @@
 </head>
 <body>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
+<section class="hero is-fullheight hero-landing">
+  <div class="hero-video-container" aria-hidden="true">
+    <video id="landing-video" autoplay muted loop playsinline>
+      <source src="content/teaser.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
   </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="#abstract">Abstract</a>
-      <a class="navbar-item" href="#benchmark">Benchmark</a>
-      <a class="navbar-item" href="#results">Results</a>
-      <a class="navbar-item" href="#appendix">Appendix</a>
-      <a class="navbar-item" href="#BibTeX">BibTeX</a>
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title hero-video-title">
+            Colosseum V2:<br>
+            Benchmarking Generalization for Vision Language Action Models
+          </h1>
+        </div>
+      </div>
     </div>
   </div>
-</nav>
+</section>
 
 <section class="hero is-colosseum">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">
-            Colosseum V2:<br>
-            Benchmarking Generalization for Vision Language Action Models
-          </h1>
-
           <div class="is-size-5 publication-authors">
             <span class="author-block"><a href="http://jeremymorgan.io/">Jeremy Morgan</a><sup>1</sup>,</span>
             <span class="author-block"><a href="https://prajwal-vijay.github.io/">Prajwal Vijay</a><sup>2</sup>,</span>
@@ -163,7 +160,7 @@
               </span>
               <!--  -->
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2605.27759v1"
+                <a href="https://arxiv.org/abs/2605.27759"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
@@ -443,7 +440,7 @@
       <div class="column is-full-width">
         <h2 class="title is-3">Results and Analysis</h2>
         <figure class="image mb-5">
-          <img src="content/ColosseumV2_mean_SR_change_2.jpg"
+          <img src="content/mean_change_barchart.jpg"
                alt="Average change in success rate for each perturbation.">
         </figure>
         <figure class="image mb-5" style="max-width: 80%; margin-left: auto; margin-right: auto;">
@@ -536,6 +533,7 @@
                  class="hardware-video"
                  controls
                  muted
+                 loop
                  playsinline
                  preload="metadata">
             <source id="hardware-video-source"
@@ -547,7 +545,7 @@
         <div class="columns is-vcentered">
           <div class="column is-half">
             <figure class="image">
-              <img src="content/hardware_vs_sim.png"
+              <img src="content/hardware_vs_sim.jpg"
                    alt="Simulation versus hardware success rate comparison.">
             </figure>
             <p class="is-size-7 has-text-centered mt-3">
@@ -627,7 +625,9 @@
         <div class="content">
           <p>
             This website is adapted from the
-            <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page template</a>.
+            <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page template</a>
+            and
+            <a href="https://umi-on-legs.github.io/">UMI on Legs</a>.
           </p>
         </div>
       </div>
