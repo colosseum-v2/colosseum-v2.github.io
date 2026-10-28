@@ -401,9 +401,8 @@
              style="box-shadow: 0 10px 30px rgba(10, 10, 10, 0.08);">
       </figure>
       <h2 class="subtitle has-text-centered">
-        A large-scale, GPU-parallelized simulation benchmark for measuring how Vision-Language-Action
-        policies generalize across visual changes, language rephrasings, action perturbations, and
-        robot morphologies.
+        A GPU-parallelized simulation benchmark for measuring how Vision-Language-Action
+        policies generalize to visual, language, and action perturbations.
       </h2>
 
       <div class="columns is-centered has-text-centered">
@@ -433,7 +432,7 @@
         </div>
         <div class="column">
           <div class="stat-card is-compact">
-            <div class="stat-number">26x</div>
+            <div class="stat-number">26×</div>
             <p class="heading">Sim Steps / Sec compared to Colosseum</p>
             <!-- <p class="is-size-7"></p> -->
           </div>
@@ -490,7 +489,7 @@
             temporally extended, long-horizon behaviors.
             Note: MO stands for the Manipulation Object, the object that is directly manipulated,
             and RO stands for the Receiving Object, the object that is indirectly interacted with.
-            These videos are from the human camera. The models ingest three or four camera images
+            These videos are from a third-person viewing camera that the models do not see. The models ingest three or four camera images
             that are not shown here.
           </p>
         </div>
@@ -524,8 +523,8 @@
           <ul>
             <li>
               <strong>Visual.</strong>
-              <span class="listed-name">MO_color</span>, <span class="listed-name">RO_color</span>, <span class="listed-name">MO_texture</span>, <span class="listed-name">RO_texture</span>, <span class="listed-name">table_color</span>, <span class="listed-name">light_color</span>, <span class="listed-name">table_texture</span>,
-              <span class="listed-name">camera_pose</span>, <span class="listed-name">distractor_object</span>, <span class="listed-name">background_texture</span>, and <span class="listed-name">background_color</span>.
+              <span class="listed-name">MO-Color</span>, <span class="listed-name">RO-Color</span>, <span class="listed-name">MO-Texture</span>, <span class="listed-name">RO-Texture</span>, <span class="listed-name">Table-Color</span>, <span class="listed-name">Light-Color</span>, <span class="listed-name">Table-Texture</span>,
+              <span class="listed-name">Camera-Pose</span>, <span class="listed-name">Distractor-Objects</span>, <span class="listed-name">Background-Texture</span>, and <span class="listed-name">Background-Color</span>.
               <div class="example-carousel" data-carousel="visual">
               </div>
             </li>
@@ -537,7 +536,7 @@
             </li>
             <li>
               <strong>Action.</strong>
-              <span class="listed-name">MO_size</span>, <span class="listed-name">RO_size</span>, and <span class="listed-name">pose_randomization</span>.
+              <span class="listed-name">MO-Size</span>, <span class="listed-name">RO-Size</span>, and <span class="listed-name">Pose-Randomization</span>.
               <div class="example-carousel" data-carousel="action">
               </div>
             </li>
@@ -559,7 +558,7 @@
         <h2 class="title is-3">Evaluation Protocol</h2>
         <div class="content has-text-justified">
           <p>
-            The benchmark evaluates three language-conditioned imitation learning models: <span class="model-name" data-model="ACT">ACT</span>,
+            Three language-conditioned imitation learning models are evaluated: <span class="model-name" data-model="ACT">ACT</span>,
             <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, and <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>. A separate multitask policy is trained for each model and robot
             morphology. All three models are trained on 100 perturbation-free demonstrations per task
             and evaluated on every perturbation over 200 episodes. Raw <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> results are in the appendix.
@@ -579,8 +578,8 @@
             <li>
               <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
               Default &pi;<sub>0.5</sub> model from lerobot version v0.4.4. Trained with a batch size of 4 on an H100 until convergence.
-              Note that due to breaking changes between lerobot version v0.4.4 and v0.6.0 you cannot run the &pi;<sub>0.5</sub> model we finetuned on the current lerobot repo.
-              Fear not though — instructions for finetuning and evaluation of the model benchmarked in the paper are available at
+              Note that due to breaking changes between lerobot version 0.4.4 and 0.6.0, you cannot run the &pi;<sub>0.5</sub> model we finetuned on the current lerobot repo.
+              However, instructions for finetuning and evaluation of the model benchmarked in the paper are available at
               <a href="https://github.com/jstmn/lerobot_colosseum_v2/tree/lerobot_0.4.3">jstmn/lerobot_colosseum_v2@lerobot_0.4.3</a>.
             </li>
             <li>
@@ -589,7 +588,7 @@
               Finetuned for 10,000 steps with a batch size of 32 on an A100.
               Only the action expert was finetuned due to GPU VRAM constraints
               (<code>--policy.train_action_expert_only=true</code>).
-              Instructions for finetuning and evaluation of the model benchmarked in the paper are available at
+              Instructions for finetuning and evaluation this model are available at
               <a href="https://github.com/jstmn/lerobot_colosseum_v2">jstmn/lerobot_colosseum_v2</a>.
             </li>
           </ul>
@@ -606,7 +605,7 @@
         <h2 class="title is-3">Results and Analysis</h2>
         <div class="content">
           <p>
-            Episodes from every policy, task, and perturbation can be viewed in this viewer.
+            Episodes from every policy, task, and perturbation can be browsed in the viewer below.
             Generalization and base success rates are shown below.
           </p>
         </div>
@@ -638,6 +637,13 @@
         <div id="rollout-stage" class="rollout-stage"></div>
 
         <h3 class="title is-4 mt-6">Generalization</h3>
+        <div class="content has-text-justified">
+          <p>
+            To reduce noise, the generalization statistics below include only tasks whose no-perturbation
+            success rate is at least 10% for the given model and morphology. The included task set therefore
+            differs between models; per-task results are in the appendix.
+          </p>
+        </div>
         <figure class="image mb-5">
           <img src="content/mean_change_barchart.jpg"
                alt="Average change in success rate for each perturbation.">
@@ -661,7 +667,7 @@
             </li>
             <li>
               <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
-              Like <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, strong visual generalization results are demonstrated.
+              Like <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> generalizes well to visual perturbations.
             </li>
           </ul>
         </div>
@@ -680,13 +686,13 @@
             </li>
             <li>
               <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
-              Significantly degrades task performance as the instruction leaves the training distribution:
-              &minus;63.6%, &minus;72.2%, &minus;87.8%, and &minus;91.2% for paraphrase, none, other-task, and random.
-              The ordering here is significant. Semantically, each of the four perturbations is farther from the training distribution, leading to increasing declines in success rate.
+              Substantially degrades task performance as the instruction leaves the training distribution:
+              &minus;63.6%, &minus;72.2%, &minus;87.8%, and &minus;91.2% (bimanual) for paraphrase, none, other-task, and random.
+              The ordering here is informative. Each successive perturbation is semantically farther from the training distribution, and the success rate declines accordingly.
             </li>
             <li>
               <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
-              Nearly negligible change in task performance, indicating that, like <span class="model-name" data-model="ACT">ACT</span>, the language component is ignored.
+              Nearly negligible change in task performance, suggesting that, like <span class="model-name" data-model="ACT">ACT</span>, it largely ignores the language component.
             </li>
           </ul>
         </div>
@@ -697,37 +703,36 @@
             <li>
               <span class="model-name" data-model="ACT">ACT</span>:
               The average relative decrease across the action perturbations is 11.2% (single-arm) and 18.24% (bimanual).
-              <span class="listed-name">pose_randomization</span> is the primary contributor, at 21.8% and 40.9%.
-              The bimanual drop is larger. We hypothesize this comes from greater spatial reasoning demands in the larger action space, and from joint-space control rather than the 6-DOF cartesian control used on the single-arm suite.
+              <span class="listed-name">Pose-Randomization</span> is the primary contributor, at 21.8% and 40.9%.
+              The bimanual drop is larger. We hypothesize this comes from greater spatial reasoning demands in the larger action space, and from joint-space control rather than the 6-DOF Cartesian control used on the single-arm suite.
             </li>
             <li>
               <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
               The average relative decrease is 4.11% (single-arm) and 10.08% (bimanual).
-              Under <span class="listed-name">pose_randomization</span> the decreases are 12.9% and 51.4%, again larger for bimanual tasks.
-              <span class="listed-name">MO_size</span> is neutral or positive: a larger manipulated object often makes the task easier, as in ScoopBanana.
+              Under <span class="listed-name">Pose-Randomization</span>, the decreases are 12.9% and 51.4%, again larger for bimanual tasks.
+              <span class="listed-name">MO-Size</span> is neutral or positive: a larger manipulated object often makes the task easier, as in ScoopBanana.
             </li>
             <li>
-              <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
-              On tasks with no-perturbation success of at least 10%, the mean relative change across the action perturbations is +5.6% (single-arm) and &minus;23.3% (bimanual).
-              <span class="listed-name">pose_randomization</span> drops success by 29.8% and 27.4%.
-              <span class="listed-name">MO_size</span> is nearly neutral on the single-arm suite (&minus;3.5%) and a 31.5% drop on bimanual.
-              <span class="listed-name">RO_size</span> is +50% on the one included single-arm task (ScoopBanana) and &minus;11.1% on bimanual.
+              <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>: The mean relative change across the action perturbations is +5.6% (single-arm) and &minus;23.3% (bimanual).
+              <span class="listed-name">Pose-Randomization</span> drops success by 29.8% and 27.4%.
+              <span class="listed-name">MO-Size</span> is nearly neutral on the single-arm suite (&minus;3.5%) but causes a 31.5% drop on bimanual.
+              <span class="listed-name">RO-Size</span> raises success by +50% on the one included single-arm task (ScoopBanana) and &minus;11.1% on bimanual.
+              Note that the positive single-arm average is driven entirely by <span class="listed-name">RO-Size</span> on ScoopBanana;
+              the other two action perturbations both reduce success. Only two bimanual tasks (DualArmPourPot and DualArmLiftPot) meet the 10% threshold.
             </li>
           </ul>
         </div>
 
         <div class="content has-text-justified">
           <p>
-            Across morphologies, perturbations have remarkably consistent effects. The average change
-            in mean absolute success-rate drop between single-arm and bimanual suites is 10.83% for
+            Across morphologies, perturbations have remarkably consistent effects. The mean absolute difference in per-perturbation success rate change between single-arm and bimanual suites is 10.83% for
             <span class="model-name" data-model="ACT">ACT</span> and 3.69% for <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, indicating that perturbation factors expose model-specific
-            generalization behavior rather than only task-specific artifacts. <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was evaluated
-            on both morphologies as well.
+            generalization behavior rather than only task-specific artifacts.
           </p>
         </div>
 
         <h3 class="title is-4 mt-6">Base Success Rates</h3>
-        <figure class="image mb-5">
+        <figure class="image mb-5" style="width: 80%; margin-left: auto; margin-right: auto;">
           <img src="content/waterfall_plot.png"
                alt="Per-task success rates with no perturbations, ordered by success rate, for the single-arm and bimanual suites.">
         </figure>
@@ -736,9 +741,9 @@
               <li>
                 <span class="model-name" data-model="ACT">ACT</span>:
                 With no perturbations, mean success is 29.2% and 44.5% on the single-arm and bimanual suites.
-                That is higher than both <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> and <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
+                This is higher than both <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> and <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
                 1.37&times; and 3.53&times; versus <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, and 1.11&times; and 7.30&times; versus <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>.
-                This indicates a specialist versus generalist tradeoff. The two VLA models are more generally capable and more robust to environmental perturbations, but they perform worse on these tasks.
+                One possible explanation is a specialist versus generalist tradeoff: the two VLA models may be more generally capable and more robust to environmental perturbations, but they perform worse on these tasks.
               </li>
               <li>
                 <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
@@ -765,7 +770,7 @@
             To test whether simulation captures real-world robustness, five single-arm parallel-jaw tasks are reproduced on hardware:
             <span class="listed-name">RaiseCube</span>, <span class="listed-name">RotateArrow</span>, <span class="listed-name">LiftPegUpright</span>, <span class="listed-name">PickDishFromRack</span>, and <span class="listed-name">PickSodaFromCabinet</span>.
             A single multitask <span class="model-name" data-model="ACT">ACT</span> policy is trained from scratch with 60 demonstrations per task.
-            Each task is evaluated under <span class="listed-name">none</span>, <span class="listed-name">MO_size</span>, <span class="listed-name">MO_color</span>, <span class="listed-name">background_color</span>, <span class="listed-name">light_color</span>, <span class="listed-name">language_none</span>, and <span class="listed-name">table_color</span>, with 20 trials per task-condition pair.
+            Each task is evaluated under <span class="listed-name">None</span>, <span class="listed-name">MO-Size</span>, <span class="listed-name">MO-Color</span>, <span class="listed-name">Background-Color</span>, <span class="listed-name">Light-Color</span>, <span class="listed-name">Distractor-Objects</span>, <span class="listed-name">Language-None</span>, and <span class="listed-name">Table-Color</span>, with 20 trials per task-condition pair.
           </p>
         </div>
         <figure class="image mb-5" style="width: 80%; margin-left: auto; margin-right: auto;">
@@ -775,9 +780,9 @@
         <h3 class="title is-4">Results</h3>
         <div class="content has-text-justified">
           <p>
-            Real-world experiments indicate that Colosseum V2 does not precisely predict the absolute success rate on hardware for a particular task. 
-            However, this is not true in aggregate as for all (sim, real) success pairs, the best-fit relationship is SR<sub>sim</sub> = 0.86 &times; SR<sub>real</sub> + 15.1.
-            This trendline is relatively close to SR<sub>sim</sub> = SR<sub>real</sub>, illustrating the general trend is followed despite noise on a per task basis.
+            Real-world experiments indicate that Colosseum V2 does not precisely predict the absolute success rate on hardware for a particular task.
+            In aggregate however, simulation tracks hardware closely: across all (sim, real) success pairs, the best-fit relationship is SR<sub>sim</sub> = 0.86 &times; SR<sub>real</sub> + 15.1.
+            This trendline is relatively close to SR<sub>sim</sub> = SR<sub>real</sub>, illustrating that the overall trend holds despite per-task noise.
           </p>
         </div>
         <figure class="image mb-5" style="width: 80%; margin-left: auto; margin-right: auto;">
@@ -797,15 +802,15 @@
             <div class="control">
               <div class="select is-fullwidth">
                 <select id="hardware-video-select">
-                  <option value="content/hardware_videos/LiftPegUpright__mocolor__fail.mp4">LiftPegUpright - MO Color - Fail</option>
-                  <option value="content/hardware_videos/LiftPegUpright__mocolor__success.mp4">LiftPegUpright - MO Color - Success</option>
-                  <option value="content/hardware_videos/RaiseCube__distractor__fail.mp4">RaiseCube - Distractor - Fail</option>
-                  <option value="content/hardware_videos/RaiseCube__distractor__success.mp4">RaiseCube - Distractor - Success</option>
-                  <option value="content/hardware_videos/RaiseCube__lighting__fail.mp4">RaiseCube - Lighting - Fail</option>
-                  <option value="content/hardware_videos/RaiseCube__lighting__success.mp4">RaiseCube - Lighting - Success</option>
-                  <option value="content/hardware_videos/RaiseCube__mocolor__fail.mp4">RaiseCube - MO Color - Fail</option>
-                  <option value="content/hardware_videos/RaiseCube__mosize__fail.mp4">RaiseCube - MO Size - Fail</option>
-                  <option value="content/hardware_videos/RaiseCube__mosize__success.mp4">RaiseCube - MO Size - Success</option>
+                  <option value="content/hardware_videos/LiftPegUpright__mocolor__fail.mp4">LiftPegUpright - MO-Color - Fail</option>
+                  <option value="content/hardware_videos/LiftPegUpright__mocolor__success.mp4">LiftPegUpright - MO-Color - Success</option>
+                  <option value="content/hardware_videos/RaiseCube__distractor__fail.mp4">RaiseCube - Distractor-Objects - Fail</option>
+                  <option value="content/hardware_videos/RaiseCube__distractor__success.mp4">RaiseCube - Distractor-Objects - Success</option>
+                  <option value="content/hardware_videos/RaiseCube__lighting__fail.mp4">RaiseCube - Light-Color - Fail</option>
+                  <option value="content/hardware_videos/RaiseCube__lighting__success.mp4">RaiseCube - Light-Color - Success</option>
+                  <option value="content/hardware_videos/RaiseCube__mocolor__fail.mp4">RaiseCube - MO-Color - Fail</option>
+                  <option value="content/hardware_videos/RaiseCube__mosize__fail.mp4">RaiseCube - MO-Size - Fail</option>
+                  <option value="content/hardware_videos/RaiseCube__mosize__success.mp4">RaiseCube - MO-Size - Success</option>
                 </select>
               </div>
             </div>
@@ -839,7 +844,7 @@
       </p>
     </div>
     <button id="appendix-toggle"
-            class="button is-normal is-rounded is-dark mb-4"
+            class="button is-dark is-outlined mb-4"
             type="button"
             aria-controls="appendix-pdf"
             aria-expanded="false">
@@ -850,6 +855,13 @@
               src="content/Colosseum_v2__appendix.pdf"
               title="Colosseum V2 Appendix PDF">
       </iframe>
+    </div>
+    <div>
+      <a class="button is-dark is-outlined"
+         href="content/raw_model_results.zip"
+         download="raw_model_results.zip">
+        Download raw results
+      </a>
     </div>
   </div>
 </section>

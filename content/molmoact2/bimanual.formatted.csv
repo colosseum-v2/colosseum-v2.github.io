@@ -1,0 +1,12 @@
+Task,none,all,mo_color,mo_texture,ro_color,ro_texture,table_color,light_color,table_texture,distractor_object,background_texture,background_color,camera_pose,pose_randomization,mo_size,ro_size,language_paraphrase,language_other_task,language_random,language_none
+DualArmPourPot,22.5,1.0,2.0,0.0,3.5,10.0,10.0,0.0,2.5,13.5,12.5,16.5,3.5,13.5,7.5,20.0,5.5,23.5,9.0,26.5
+DualArmLiftPot,13.5,1.0,4.5,5.0,,,16.0,10.0,3.0,16.5,17.5,18.5,16.5,11.5,14.0,,15.0,28.0,20.0,14.0
+DualArmPushBox,6.5,0.0,0.0,0.0,5.0,8.0,2.0,6.5,3.0,5.0,3.5,4.5,16.5,2.5,6.5,3.5,5.0,3.5,1.5,3.5
+DualArmCubeHandover,0.0,0.0,0.0,0.0,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0,0.0
+DualArmBottleHandover,0.0,0.0,0.0,0.0,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0,0.0
+DualArmLiftTray,0.0,0.0,0.0,0.0,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0,0.0
+DualArmThreading,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,,,,0.0,0.0,,
+DualArmPenCap,,3.0,,,,,0.0,,0.0,,,,,,,,,,,
+DualArmDrawerPlace,,0.0,,,,,0.0,,0.0,,,,,,,,,,,
+DualArmDrawerOpen,,0.0,,,,,0.0,,0.0,,,,,,,,,,,
+DualArmStackCube,,0.0,,,,,0.0,,0.0,,,,,,,,,,,
