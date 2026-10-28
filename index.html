@@ -6,19 +6,22 @@
         content="Colosseum V2 is a GPU-parallelized benchmark for evaluating Vision-Language-Action model generalization across visual, language, and action perturbations.">
   <meta name="keywords" content="Colosseum V2, robotics, Vision-Language-Action models, VLA, imitation learning, benchmark, generalization, ManiSkill">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Colosseum V2: Benchmarking Generalization for Vision Language Action Models</title>
+  <title>Colosseum V2: Benchmarking Generalization for Vision-Language-Action Models</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="icon" href="./static/images/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="./static/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./static/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./static/images/apple-touch-icon.png">
+  <link rel="manifest" href="./site.webmanifest">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -29,6 +32,7 @@
   <style>
     .hero.is-colosseum {
       background: linear-gradient(135deg, #f6f8ff 0%, #eef7f4 45%, #ffffff 100%);
+      /* background: linear-gradient(90deg, #c46302 0%, #eef7f4 45%, #b20707 100%); */
     }
 
     .stat-card,
@@ -57,7 +61,7 @@
 
     .stat-number {
       color: #3273dc;
-      font-family: 'Google Sans', sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-size: 2.25rem;
       font-weight: 700;
       line-height: 1;
@@ -70,6 +74,10 @@
     .benchmark-name {
       font-variant: small-caps;
       letter-spacing: 0.02em;
+    }
+
+    .listed-name {
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
     .section-divider {
@@ -98,45 +106,229 @@
       max-height: 540px;
       background: #000000;
     }
+
+    .rollout-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      min-height: 120px;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f4f4f4;
+      border: 1px solid #e7e7e7;
+      border-radius: 12px;
+    }
+
+    .rollout-card {
+      background: #ffffff;
+      border: 1px solid #dbdbdb;
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(10, 10, 10, 0.08);
+      overflow: hidden;
+    }
+
+    @font-face {
+      font-family: 'IBM Plex Mono';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('./static/fonts/IBMPlexMono-Regular.woff2') format('woff2');
+    }
+
+    @font-face {
+      font-family: 'IBM Plex Mono';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('./static/fonts/IBMPlexMono-Bold.woff2') format('woff2');
+    }
+
+    .rollout-card header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.55rem 0.75rem;
+      background: #fafafa;
+      border-bottom: 1px solid #eeeeee;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .rollout-card header p {
+      flex: 1;
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.35;
+    }
+
+    .model-name {
+      font-weight: 700;
+    }
+
+    .rollout-outcome {
+      font-weight: 700;
+    }
+
+    .rollout-outcome.is-success {
+      color: #15803d;
+    }
+
+    .rollout-outcome.is-fail {
+      color: #dc2626;
+    }
+
+    .rollout-card video,
+    .example-slide video {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: transparent;
+      object-fit: contain;
+    }
+
+    .example-slide video {
+      aspect-ratio: 1 / 1;
+    }
+
+    #benchmark .column,
+    #benchmark .content,
+    #benchmark .content li {
+      min-width: 0;
+    }
+
+    .example-carousel {
+      width: calc(100% + 2em);
+      max-width: calc(100% + 2em);
+      margin: 1rem 0 0.35rem -2em;
+      overflow: hidden;
+    }
+
+    #benchmark .content li.perturbation-break {
+      margin-top: 2rem;
+    }
+
+    .example-carousel .item {
+      margin: 5px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #bbbbbb;
+      border-radius: 10px;
+    }
+
+    .example-carousel .slider-navigation-previous,
+    .example-carousel .slider-navigation-next {
+      z-index: 2;
+    }
+
+    .example-slide p {
+      margin: 0;
+    }
+
+    .example-slide-caption {
+      padding: 0.55rem 0.75rem;
+      background: #fafafa;
+      border-bottom: 1px solid #eeeeee;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.85rem;
+      line-height: 1.35;
+    }
+
+    .example-slide-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 0.85rem 0.9rem 1rem;
+    }
+
+    .language-commands {
+      margin: 0;
+      max-height: 16rem;
+      overflow: auto;
+      padding: 0.65rem 0.75rem;
+      background: #f5f5f5;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .language-commands code {
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .language-example-kind {
+      margin: 0 0 0.4rem;
+      font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.85rem;
+      color: #4a4a4a;
+    }
+
+    .language-example-text {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .language-example-text.is-empty {
+      font-weight: 500;
+      font-style: italic;
+      color: #7a7a7a;
+    }
+
+    @media (max-width: 768px) {
+      .rollout-stage {
+        grid-template-columns: 1fr;
+      }
+
+      .example-carousel {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+      }
+    }
   </style>
 </head>
 <body>
 
-<section class="hero is-fullheight hero-landing">
-  <div class="hero-video-container" aria-hidden="true">
-    <video id="landing-video" autoplay muted loop playsinline>
-      <source src="content/teaser.mp4" type="video/mp4">
-    </video>
-    <div class="hero-video-overlay"></div>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
   </div>
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title hero-video-title">
-            Colosseum V2:<br>
-            Benchmarking Generalization for Vision Language Action Models
-          </h1>
-        </div>
-      </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#abstract">Abstract</a>
+      <a class="navbar-item" href="#benchmark">Benchmark</a>
+      <a class="navbar-item" href="#results">Results</a>
+      <a class="navbar-item" href="#appendix">Appendix</a>
+      <a class="navbar-item" href="#BibTeX">BibTeX</a>
     </div>
   </div>
-</section>
+</nav>
 
 <section class="hero is-colosseum">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            Colosseum V2:<br>
+            Benchmarking Generalization for Vision-Language-Action Models
+          </h1>
+
           <div class="is-size-5 publication-authors">
             <span class="author-block"><a href="http://jeremymorgan.io/">Jeremy Morgan</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="https://prajwal-vijay.github.io/">Prajwal Vijay</a><sup>2</sup>,</span>
             <span class="author-block"><a href="https://leehakho.github.io/">Hyeonho Oh</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://prajwal-vijay.github.io/">Prajwal Vijay</a><sup>2</sup>,</span>
             <span class="author-block"><a href="https://github.com/Geeksongs">Jincen Song</a><sup>3</sup>,</span>
-            <span class="author-block">Ashvin Arora<sup>1</sup>,</span>
-            <span class="author-block">Alina Du<sup>1</sup>,</span>
-            <span class="author-block"><a href="https://uscresl.org/principal-investigator/">Gaurav S. Sukhatme</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.linkedin.com/in/ashvin-arora">Ashvin Arora</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.linkedin.com/in/hojung-lim-817859192">Hojung Lim</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.linkedin.com/in/alina-duong-7397922b7">Alina Du</a><sup>1</sup>,</span>
             <span class="author-block"><a href="https://jessethomason.com/">Jesse Thomason</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://uscresl.org/principal-investigator/">Gaurav S. Sukhatme</a><sup>1</sup>,</span>
             <span class="author-block"><a href="https://ishikasingh.github.io/">Ishika Singh</a><sup>1</sup></span>
           </div>
 
@@ -166,6 +358,15 @@
                     <i class="ai ai-arxiv"></i>
                   </span>
                   <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://ieeexplore.ieee.org/document/11726868"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-ieee"></i>
+                  </span>
+                  <span>IEEE</span>
                 </a>
               </span>
               <!--  -->
@@ -215,7 +416,7 @@
         </div>
         <div class="column">
           <div class="stat-card">
-            <div class="stat-number">16</div>
+            <div class="stat-number">19</div>
             <p class="heading">Perturbation Factors</p>
           </div>
         </div>
@@ -259,10 +460,10 @@
             and supports both in-domain and out-of-domain testing at scale.
           </p>
           <p>
-            We evaluate state-of-the-art methods, including Action Chunking Transformers (ACT) and
-            &pi;<sub>0.5</sub>, and reveal limitations in both base performance and generalization. Hardware
-            experiments show strong correlations between simulation and real-world metrics, supporting
-            the benchmark's ecological validity.
+            We evaluate state-of-the-art methods, including <span class="model-name" data-model="ACT">Action Chunking Transformers (ACT)</span>,
+            <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, and <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>, and reveal limitations in both base performance and generalization.
+            Hardware experiments show that simulation tracks relative robustness on real hardware,
+            supporting the benchmark's ecological validity.
           </p>
         </div>
       </div>
@@ -282,129 +483,65 @@
             a parallel-jaw gripper and a bimanual configuration with two Panda arms operating in a
             shared workspace. Tasks are organized from simple manipulation primitives through
             temporally extended, long-horizon behaviors.
+            Note: MO stands for the Manipulation Object, the object that is directly manipulated,
+            and RO stands for the Receiving Object, the object that is indirectly interacted with.
+            These videos are from the human camera. The models ingest three or four camera images
+            that are not shown here.
           </p>
         </div>
 
-        <div class="columns">
-          <div class="column">
-            <div class="box task-card">
-              <h3 class="title is-4">Single-Arm PJG</h3>
-              <div class="content">
-                <p>
-                  Sixteen tasks cover picking, pick-and-place, reorientation, insertion, tool use,
-                  articulated object interaction, and long-horizon manipulation.
-                </p>
-                <p class="tag-list">
-                  <span class="tag is-link is-light">RaiseCube</span>
-                  <span class="tag is-link is-light">PickSodaFromCabinet</span>
-                  <span class="tag is-link is-light">PickDishFromRack</span>
-                  <span class="tag is-link is-light">StackCube</span>
-                  <span class="tag is-link is-light">PlaceBookInShelf</span>
-                  <span class="tag is-link is-light">PlaceDishInRack</span>
-                  <span class="tag is-link is-light">LiftPegUpright</span>
-                  <span class="tag is-link is-light">RotateArrow</span>
-                  <span class="tag is-link is-light">PegInsertionSide</span>
-                  <span class="tag is-link is-light">PlugCharger</span>
-                  <span class="tag is-link is-light">HammerNail</span>
-                  <span class="tag is-link is-light">ScoopBanana</span>
-                  <span class="tag is-link is-light">OpenDrawer</span>
-                  <span class="tag is-link is-light">OpenCabinet</span>
-                  <span class="tag is-link is-light">PlaceCubeInDrawer</span>
-                  <span class="tag is-link is-light">CookItemInPan</span>
-                </p>
+        <div class="content">
+          <h3>Morphologies</h3>
+          <ul>
+            <li>
+              <strong>Single-arm PJG.</strong>
+              Sixteen tasks cover picking, pick-and-place, reorientation, insertion, tool use,
+              articulated object interaction, and long-horizon manipulation:
+              <span class="listed-name">RaiseCube</span>, <span class="listed-name">PickSodaFromCabinet</span>, <span class="listed-name">PickDishFromRack</span>, <span class="listed-name">StackCube</span>, <span class="listed-name">PlaceBookInShelf</span>,
+              <span class="listed-name">PlaceDishInRack</span>, <span class="listed-name">LiftPegUpright</span>, <span class="listed-name">RotateArrow</span>, <span class="listed-name">PegInsertionSide</span>, <span class="listed-name">PlugCharger</span>,
+              <span class="listed-name">HammerNail</span>, <span class="listed-name">ScoopBanana</span>, <span class="listed-name">OpenDrawer</span>, <span class="listed-name">OpenCabinet</span>, <span class="listed-name">PlaceCubeInDrawer</span>, and <span class="listed-name">CookItemInPan</span>.
+              <div class="example-carousel" data-carousel="single-arm">
               </div>
-            </div>
-          </div>
+            </li>
+            <li>
+              <strong>Bimanual PJG.</strong>
+              Twelve tasks test handovers, cooperative lifting, reorientation, insertion,
+              articulated object interaction, and long-horizon dual-arm coordination:
+              <span class="listed-name">DualArmCubeHandover</span>, <span class="listed-name">DualArmBottleHandover</span>, <span class="listed-name">DualArmLiftPot</span>, <span class="listed-name">DualArmLiftTray</span>,
+              <span class="listed-name">DualArmPushBox</span>, <span class="listed-name">DualArmPourPot</span>, <span class="listed-name">DualArmThreading</span>, <span class="listed-name">DualArmPenCap</span>, <span class="listed-name">DualArmDrawerPlace</span>,
+              <span class="listed-name">DualArmDrawerOpen</span>, <span class="listed-name">DualArmStackCube</span>, and <span class="listed-name">DualArmStackTwoCubes</span>.
+              <div class="example-carousel" data-carousel="bimanual">
+              </div>
+            </li>
+          </ul>
 
-          <div class="column">
-            <div class="box task-card">
-              <h3 class="title is-4">Bimanual PJG</h3>
-              <div class="content">
-                <p>
-                  Twelve tasks test handovers, cooperative lifting, reorientation, insertion,
-                  articulated object interaction, and long-horizon dual-arm coordination.
-                </p>
-                <p class="tag-list">
-                  <span class="tag is-primary is-light">DualArmCubeHandover</span>
-                  <span class="tag is-primary is-light">DualArmBottleHandover</span>
-                  <span class="tag is-primary is-light">DualArmLiftPot</span>
-                  <span class="tag is-primary is-light">DualArmLiftTray</span>
-                  <span class="tag is-primary is-light">DualArmPushBox</span>
-                  <span class="tag is-primary is-light">DualArmPourPot</span>
-                  <span class="tag is-primary is-light">DualArmThreading</span>
-                  <span class="tag is-primary is-light">DualArmPenCap</span>
-                  <span class="tag is-primary is-light">DualArmDrawerPlace</span>
-                  <span class="tag is-primary is-light">DualArmDrawerOpen</span>
-                  <span class="tag is-primary is-light">DualArmStackCube</span>
-                  <span class="tag is-primary is-light">DualArmStackTwoCubes</span>
-                </p>
+          <h3>Perturbation Axes</h3>
+          <ul>
+            <li>
+              <strong>Visual.</strong>
+              <span class="listed-name">MO_color</span>, <span class="listed-name">RO_color</span>, <span class="listed-name">MO_texture</span>, <span class="listed-name">RO_texture</span>, <span class="listed-name">table_color</span>, <span class="listed-name">light_color</span>, <span class="listed-name">table_texture</span>,
+              <span class="listed-name">camera_pose</span>, <span class="listed-name">distractor_object</span>, <span class="listed-name">background_texture</span>, and <span class="listed-name">background_color</span>.
+              <div class="example-carousel" data-carousel="visual">
               </div>
-            </div>
-          </div>
+            </li>
+            <li class="perturbation-break">
+              <strong>Language.</strong>
+              <span class="listed-name">Language-Paraphrase</span>, <span class="listed-name">Language-None</span>, <span class="listed-name">Language-Other-Task</span>, and <span class="listed-name">Language-Random</span>.
+              <div class="example-carousel" data-carousel="language">
+              </div>
+            </li>
+            <li>
+              <strong>Action.</strong>
+              <span class="listed-name">MO_size</span>, <span class="listed-name">RO_size</span>, and <span class="listed-name">pose_randomization</span>.
+              <div class="example-carousel" data-carousel="action">
+              </div>
+            </li>
+            <li>
+              <strong>Combined.</strong>
+              All perturbations applied at once.
+            </li>
+          </ul>
         </div>
-
-        <div class="section-divider"></div>
-
-        <h3 class="title is-4">Perturbation Axes</h3>
-        <div class="columns">
-          <div class="column is-one-third">
-            <div class="box feature-card">
-              <h4 class="title is-5">Visual</h4>
-              <p class="tag-list">
-                <span class="tag is-info is-light">MO Color</span>
-                <span class="tag is-info is-light">RO Color</span>
-                <span class="tag is-info is-light">MO Texture</span>
-                <span class="tag is-info is-light">RO Texture</span>
-                <span class="tag is-info is-light">Table Color</span>
-                <span class="tag is-info is-light">Light Color</span>
-                <span class="tag is-info is-light">Table Texture</span>
-                <span class="tag is-info is-light">Camera Pose</span>
-                <span class="tag is-info is-light">Distractor Object</span>
-                <span class="tag is-info is-light">Background Texture</span>
-                <span class="tag is-info is-light">Background Color</span>
-              </p>
-            </div>
-          </div>
-          <div class="column is-two-thirds">
-            <div class="columns">
-              <div class="column">
-                <div class="box feature-card">
-                  <h4 class="title is-5">Language</h4>
-                  <p class="tag-list">
-                    <span class="tag is-warning is-light">Language</span>
-                  </p>
-                </div>
-              </div>
-              <div class="column">
-                <div class="box feature-card">
-                  <h4 class="title is-5">Action</h4>
-                  <p class="tag-list">
-                    <span class="tag is-danger is-light">MO Size</span>
-                    <span class="tag is-danger is-light">RO Size</span>
-                    <span class="tag is-danger is-light">Pose Randomization</span>
-                  </p>
-                </div>
-              </div>
-              <div class="column">
-                <div class="box feature-card">
-                  <h4 class="title is-5">Combined</h4>
-                  <p class="tag-list">
-                    <span class="tag is-dark is-light">All Perturbations</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- <div class="content has-text-justified">
-          <p>
-            Combined perturbations apply all factors simultaneously, representing the most challenging
-            out-of-distribution setting. Demonstrations are generated by expert motion-planning solvers
-            with privileged simulator state, while policies receive RGB observations from external and
-            wrist-mounted cameras.
-          </p>
-        </div> -->
       </div>
     </div>
   </div>
@@ -417,14 +554,14 @@
         <h2 class="title is-3">Evaluation Protocol</h2>
         <div class="content has-text-justified">
           <p>
-            The benchmark provides initial evaluations of two language-conditioned imitation learning
-            models: ACT and &pi;<sub>0.5</sub>. Models are trained separately for the single-arm and bimanual test
-            suites using 100 perturbation-free demonstrations per task, then evaluated on each
-            perturbation individually over 200 episodes.
+            The benchmark evaluates three language-conditioned imitation learning models: <span class="model-name" data-model="ACT">ACT</span>,
+            <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, and <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>. A separate multitask policy is trained for each model and robot
+            morphology. All three models are trained on 100 perturbation-free demonstrations per task
+            and evaluated on every perturbation over 200 episodes. Raw <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> results are in the appendix.
           </p>
           <p>
             GPU-parallelized simulation makes the evaluation statistically thorough without making it
-            prohibitively slow. On a single RTX 4090, ACT can be evaluated on both test suites in
+            prohibitively slow. On a single RTX 4090, <span class="model-name" data-model="ACT">ACT</span> can be evaluated on both test suites in
             11.5 hours while producing ten times as many success-rate measurements as the original
             Colosseum evaluation setup.
           </p>
@@ -452,10 +589,11 @@
             <div class="box result-card">
               <h3 class="title is-4">Visual Generalization</h3>
               <p>
-                ACT shows larger average success-rate drops under visual perturbations than &pi;<sub>0.5</sub>:
+                <span class="model-name" data-model="ACT">ACT</span> shows larger average success-rate drops under visual perturbations than <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
                 28.57% and 29.06% on the single-arm and bimanual suites, compared with 7.73% and
-                9.86% for &pi;<sub>0.5</sub>. The paper hypothesizes that &pi;<sub>0.5</sub> benefits from larger pretrained
-                visual representations.
+                9.86% for <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>. The paper hypothesizes that <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> benefits from larger pretrained
+                visual representations. <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was also evaluated under the same visual perturbations;
+                its raw results are in the appendix.
               </p>
             </div>
           </div>
@@ -464,9 +602,12 @@
             <div class="box result-card">
               <h3 class="title is-4">Language Generalization</h3>
               <p>
-                ACT is nearly invariant to language rephrasings, with average drops of 0.28% and
-                -0.57%. &pi;<sub>0.5</sub> drops 19.16% and 24.0%, suggesting that fine-tuning the whole model can
-                reduce robustness to semantically equivalent instructions.
+                Language is tested with four conditions: paraphrase, no instruction, an instruction from
+                another task, and random English words. <span class="model-name" data-model="ACT">ACT</span> barely changes under paraphrase
+                (&minus;0.28% single-arm, &minus;0.57% bimanual), which suggests that it largely ignores language
+                conditioning. Bimanual <span class="model-name" data-model="Pi0.5" data-variant="Bimanual">&pi;<sub>0.5</sub></span> degrades as the instruction leaves the training distribution:
+                &minus;63.6%, &minus;72.2%, &minus;87.8%, and &minus;91.2% for paraphrase, none, other-task, and random.
+                <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was also evaluated on all four language conditions.
               </p>
             </div>
           </div>
@@ -475,8 +616,9 @@
             <div class="box result-card">
               <h3 class="title is-4">Action Generalization</h3>
               <p>
-                Pose randomization is a primary challenge for both model families, especially in
+                Pose randomization is a primary challenge for <span class="model-name" data-model="ACT">ACT</span> and <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, especially in
                 bimanual tasks where the action space and coordination demands are larger.
+                <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was also evaluated under the action perturbations.
               </p>
             </div>
           </div>
@@ -485,8 +627,10 @@
             <div class="box result-card">
               <h3 class="title is-4">Base Success Rates</h3>
               <p>
-                ACT achieves higher perturbation-free success rates than &pi;<sub>0.5</sub> on both suites,
-                suggesting a tradeoff between task-specific proficiency and broader robustness.
+                With no perturbations, mean success is 29.2% and 44.5% for <span class="model-name" data-model="ACT">ACT</span> on the single-arm
+                and bimanual suites, compared with 21.2% and 12.6% for <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>
+                (1.37&times; and 3.53&times;). <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was also evaluated without perturbations;
+                those results are in the appendix.
               </p>
             </div>
           </div>
@@ -496,10 +640,37 @@
           <p>
             Across morphologies, perturbations have remarkably consistent effects. The average change
             in mean absolute success-rate drop between single-arm and bimanual suites is 10.83% for
-            ACT and 3.69% for &pi;<sub>0.5</sub>, indicating that perturbation factors expose model-specific
-            generalization behavior rather than only task-specific artifacts.
+            <span class="model-name" data-model="ACT">ACT</span> and 3.69% for <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, indicating that perturbation factors expose model-specific
+            generalization behavior rather than only task-specific artifacts. <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was evaluated
+            on both morphologies as well.
           </p>
         </div>
+        <div class="box">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <label class="label" for="rollout-policy">Policy</label>
+              <div class="select is-fullwidth">
+                <select id="rollout-policy"></select>
+              </div>
+            </div>
+            <div class="column">
+              <label class="label" for="rollout-env">Environment</label>
+              <div class="select is-fullwidth">
+                <select id="rollout-env"></select>
+              </div>
+            </div>
+            <div class="column">
+              <label class="label" for="rollout-perturbation">Perturbation</label>
+              <div class="select is-fullwidth">
+                <select id="rollout-perturbation"></select>
+              </div>
+            </div>
+            <div class="column is-narrow">
+              <button id="rollout-show" class="button is-dark" type="button">Add videos</button>
+            </div>
+          </div>
+        </div>
+        <div id="rollout-stage" class="rollout-stage"></div>
       </div>
     </div>
   </div>
@@ -548,31 +719,32 @@
               <img src="content/hardware_vs_sim.jpg"
                    alt="Simulation versus hardware success rate comparison.">
             </figure>
-            <p class="is-size-7 has-text-centered mt-3">
-              Markers denote perturbations: &bull; (None), &#9670; (MO Color),
-              &#9632; (Light Color), &#9650; (Distractor Object), + (Background Color),
-              and rotated + (MO Size).
-            </p>
           </div>
           <div class="column is-half">
             <div class="content has-text-justified">
               <p>
-                To assess sim-to-real transfer, the benchmark recreates three single-arm tasks on real
-                hardware: RaiseCube, RotateArrow, and LiftPegUpright. A multi-task ACT policy is trained
-                from scratch with 60 demonstrations per task and evaluated under no perturbation,
-                manipulation-object size, manipulation-object color, background color, and lighting
-                changes.
+                To test whether simulation captures real-world robustness, five single-arm tasks are
+                reproduced on hardware: RaiseCube, RotateArrow, LiftPegUpright, PickDishFromRack, and
+                PickSodaFromCabinet. A multitask <span class="model-name" data-model="ACT">ACT</span> policy is trained from scratch with 60 demonstrations
+                per task. Each task is evaluated under no perturbation, MO_size, MO_color, background_color,
+                light_color, Language-None, and table_color, with 20 trials per task-condition pair.
+                <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> and <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> were evaluated in simulation; this hardware study uses <span class="model-name" data-model="ACT">ACT</span>.
               </p>
               <p>
-                Simulation does not perfectly predict absolute hardware success rates, but it strongly
-                predicts relative degradation under perturbations. The average R-squared for predicting
-                success-rate change is 0.798, and the average Spearman correlation is 0.916, indicating
-                that the ordering of perturbation difficulty is largely preserved between simulation and
-                hardware.
+                Simulation does not precisely predict absolute hardware success. Across 35 task-perturbation
+                pairs, R<sup>2</sup> = 0.49, and the best-fit line is
+                SR<sub>sim</sub> = 0.86 &times; SR<sub>real</sub> + 15.1.
+                Relative robustness is preserved: after normalizing each perturbation by the
+                no-perturbation success rate, the mean absolute difference between simulation and hardware
+                is 12.3 percentage points.
               </p>
             </div>
           </div>
         </div>
+        <figure class="image mt-5">
+          <img src="content/hardware_vs_sim_percent_of_none_average.jpg"
+               alt="Relative robustness under each perturbation in simulation and on hardware.">
+        </figure>
       </div>
     </div>
   </div>
@@ -583,7 +755,8 @@
     <h2 class="title is-3">Appendix</h2>
     <div class="content">
       <p>
-        If your browser does not display PDFs inline,
+        The appendix includes raw simulation results for <span class="model-name" data-model="ACT">ACT</span>, <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, and <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>,
+        plus additional hardware setups. If your browser does not display PDFs inline,
         <a href="content/Colosseum_v2__appendix.pdf">open the appendix PDF directly</a>.
       </p>
     </div>
@@ -606,14 +779,16 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@misc{morgan2026colosseumv2benchmarkinggeneralization,
-      title={Colosseum V2: Benchmarking Generalization for Vision Language Action Models}, 
-      author={Jeremy Morgan and Prajwal Vijay and Hyeonho Oh and Jincen Song and Ashvin Arora and Alina Du and Gaurav Sukhatme and Jesse Thomason and Ishika Singh},
-      year={2026},
-      eprint={2605.27759},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO},
-      url={https://arxiv.org/abs/2605.27759}, 
+    <pre><code>@ARTICLE{11726868,
+  author={Morgan, Jeremy and Oh, Hyeonho and Vijay, Prajwal and Song, Jincen and Arora, Ashvin and Lim, Hojung and Du, Alina and Thomason, Jesse and Sukhatme, Gaurav S. and Singh, Ishika},
+  journal={IEEE Robotics and Automation Letters}, 
+  title={Colosseum V2: Benchmarking Generalization for Vision-Language-Action Models}, 
+  year={2026},
+  volume={11},
+  number={12},
+  pages={13749-13756},
+  keywords={Modeling;Robots;Arm;Simulation;Training;Visualization;Visual systems;Robot learning;Robustness;Hardware;Imitation learning;dual arm manipulation;deep learning in grasping and manipulation;vision-language-action models},
+  doi={10.1109/LRA.2026.3741771}
 }</code></pre>
   </div>
 </section>
@@ -635,7 +810,447 @@
   </div>
 </footer>
 
+<script src="static/js/model_colors.js"></script>
+<script src="content/policy_video_registry.js"></script>
+<script src="content/language_examples.js"></script>
 <script>
+  applyModelNameColors();
+
+  const rolloutPolicy = document.getElementById('rollout-policy');
+  const rolloutEnv = document.getElementById('rollout-env');
+  const rolloutPerturbation = document.getElementById('rollout-perturbation');
+  const rolloutShow = document.getElementById('rollout-show');
+  const rolloutStage = document.getElementById('rollout-stage');
+  const rolloutRegistry = window.POLICY_VIDEO_REGISTRY || { baseUrl: '', videos: [] };
+  const shownRollouts = new Set();
+
+  function rolloutKey(video) {
+    return video.dir + '/' + video.file;
+  }
+
+  function rolloutUrl(video) {
+    return rolloutRegistry.baseUrl + '/' + video.dir + '/' + encodeURIComponent(video.file);
+  }
+
+  const TASK_ENV = {
+    RaiseCube: 'RaiseCube-v1',
+    PickSodaFromCabinet: 'PickSodaFromCabinet-v1',
+    PickDishFromRack: 'PickDishFromRack-v1',
+    StackCube: 'StackCubeColosseumV2-v1',
+    PlaceBookInShelf: 'PlaceBookInShelf-v1',
+    PlaceDishInRack: 'PlaceDishInRack-v1',
+    LiftPegUpright: 'LiftPegUprightColosseumV2-v1',
+    RotateArrow: 'RotateArrow-v1',
+    PegInsertionSide: 'PegInsertionSideColosseumV2-v1',
+    PlugCharger: 'PlugChargerColosseumV2-v1',
+    HammerNail: 'HammerNail-v1',
+    ScoopBanana: 'ScoopBanana-v1',
+    OpenDrawer: 'OpenDrawer-v1',
+    OpenCabinet: 'OpenCabinet-v1',
+    PlaceCubeInDrawer: 'PlaceCubeInDrawer-v1',
+    CookItemInPan: 'CookItemInPan-v1',
+    DualArmCubeHandover: 'DualArmPickCube-v1',
+    DualArmBottleHandover: 'DualArmPickBottle-v1',
+    DualArmLiftPot: 'DualArmLiftPot-v1',
+    DualArmLiftTray: 'DualArmLiftTray-v1',
+    DualArmPushBox: 'DualArmPushBox-v1',
+    DualArmPourPot: 'DualArmPourPot-v1',
+    DualArmThreading: 'DualArmThreading-v1',
+    DualArmPenCap: 'DualArmPenCap-v1',
+    DualArmDrawerPlace: 'DualArmDrawerPlace-v1',
+    DualArmDrawerOpen: 'DualArmDrawerOpen-v1',
+    DualArmStackCube: 'DualArmStackCube-v1',
+    DualArmStackTwoCubes: 'DualArmStack3Cube-v1',
+  };
+
+  function normPerturbation(value) {
+    return String(value).toLowerCase();
+  }
+
+  function preferredPolicy(envOrTask) {
+    return String(envOrTask).indexOf('DualArm') === 0 ? 'act_bimanual' : 'act_single_arm';
+  }
+
+  const VISUAL_PERTURBATIONS = [
+    'MO_color', 'RO_color', 'MO_texture', 'RO_texture', 'table_color', 'light_color',
+    'table_texture', 'camera_pose', 'distractor_object', 'background_texture', 'background_color',
+  ];
+  const ACTION_PERTURBATIONS = ['MO_size', 'RO_size', 'pose_randomization'];
+  const SINGLE_ARM_TASKS = Object.keys(TASK_ENV).filter((task) => task.indexOf('DualArm') !== 0);
+  const BIMANUAL_TASKS = Object.keys(TASK_ENV).filter((task) => task.indexOf('DualArm') === 0);
+  const ENV_TASK = {};
+  Object.keys(TASK_ENV).forEach((task) => {
+    ENV_TASK[TASK_ENV[task]] = task;
+  });
+
+  function bestVideo(task, perturbations) {
+    const env = TASK_ENV[task];
+    const preferred = preferredPolicy(task);
+    for (let i = 0; i < perturbations.length; i += 1) {
+      const key = normPerturbation(perturbations[i]);
+      const matches = rolloutRegistry.videos.filter((video) => {
+        return video.env === env && normPerturbation(video.perturbation) === key;
+      });
+      if (!matches.length) continue;
+      matches.sort((a, b) => {
+        const score = (video) => (video.policy === preferred ? 4 : 0) + (video.outcome === 'success' ? 2 : 0);
+        return score(b) - score(a) || a.episode - b.episode;
+      });
+      return matches[0];
+    }
+    return null;
+  }
+
+  function rotated(list, index) {
+    const start = index % list.length;
+    return list.slice(start).concat(list.slice(0, start));
+  }
+
+  function modelShortName(policy) {
+    if (String(policy).indexOf('molmo') === 0) return 'MOLMO';
+    if (String(policy).indexOf('pi') === 0) return 'PI';
+    return 'ACT';
+  }
+
+  function videoSlide(video) {
+    const slide = document.createElement('div');
+    slide.className = 'item example-slide';
+    const header = document.createElement('p');
+    header.className = 'example-slide-caption';
+    header.textContent = ENV_TASK[video.env] || video.env.replace(/-v1$/, '');
+    if (video.outcome !== 'success') {
+      const failure = document.createElement('span');
+      failure.className = 'rollout-outcome is-fail';
+      failure.textContent = 'failure';
+      const name = document.createElement('span');
+      name.className = 'model-name';
+      name.textContent = modelShortName(video.policy);
+      name.style.color = modelPolicyColor(video.policy);
+      header.append(' - ', failure, ', ', name);
+    }
+    const player = document.createElement('video');
+    player.controls = true;
+    player.muted = true;
+    player.loop = true;
+    player.playsInline = true;
+    player.preload = 'none';
+    player.dataset.src = rolloutUrl(video);
+    slide.append(header, player);
+    return slide;
+  }
+
+  function commandBlock(lines) {
+    const block = document.createElement('pre');
+    block.className = 'language-commands';
+    const code = document.createElement('code');
+    code.textContent = lines.join('\n');
+    block.append(code);
+    return block;
+  }
+
+  function randomCommands(index) {
+    const words = window.LANGUAGE_EXAMPLES.words;
+    const commands = [];
+    let cursor = (index * 17) % words.length;
+    for (let i = 0; i < 5; i += 1) {
+      const picked = [];
+      for (let word = 0; word < 5; word += 1) {
+        picked.push(words[cursor % words.length]);
+        cursor += 1;
+      }
+      commands.push(picked.join(' '));
+    }
+    return commands;
+  }
+
+  function otherTaskCommands(task, index, tasks) {
+    const data = window.LANGUAGE_EXAMPLES;
+    const others = tasks.filter((candidate) => candidate !== task);
+    const commands = [];
+    for (let i = 0; i < 5; i += 1) {
+      const other = others[(index * 3 + i * 7) % others.length];
+      const phrases = data.paraphrases[TASK_ENV[other]];
+      commands.push(phrases[(index + i) % phrases.length]);
+    }
+    return commands;
+  }
+
+  function textSlide(example) {
+    const slide = document.createElement('div');
+    slide.className = 'item example-slide example-slide-text';
+    const kind = document.createElement('p');
+    kind.className = 'language-example-kind';
+    kind.textContent = example.kind;
+    slide.append(kind);
+    if (example.commands) {
+      slide.append(commandBlock(example.commands));
+    } else {
+      const text = document.createElement('p');
+      text.className = 'language-example-text' + (example.empty ? ' is-empty' : '');
+      text.textContent = example.text;
+      slide.append(text);
+    }
+    return slide;
+  }
+
+  function languageSlideForTask(task, index, tasks) {
+    const data = window.LANGUAGE_EXAMPLES;
+    const env = TASK_ENV[task];
+    const kind = index % 4;
+    if (kind === 0) {
+      return textSlide({
+        kind: 'Language-Paraphrase · ' + task,
+        commands: data.paraphrases[env].slice(0, 5),
+      });
+    }
+    if (kind === 1) {
+      return textSlide({
+        kind: 'Language-None · ' + task,
+        text: 'The instruction is empty.',
+        empty: true,
+      });
+    }
+    if (kind === 2) {
+      return textSlide({
+        kind: 'Language-Other-Task · ' + task + ' is the current task',
+        commands: otherTaskCommands(task, index, tasks),
+      });
+    }
+    return textSlide({
+      kind: 'Language-Random · ' + task,
+      commands: randomCommands(index),
+    });
+  }
+
+  function carouselSlides(kind) {
+    if (kind === 'single-arm') {
+      return SINGLE_ARM_TASKS.map((task) => bestVideo(task, ['none'])).filter(Boolean).map((video) => videoSlide(video));
+    }
+    if (kind === 'bimanual') {
+      return BIMANUAL_TASKS.map((task) => bestVideo(task, ['none'])).filter(Boolean).map((video) => videoSlide(video));
+    }
+    if (kind === 'visual') {
+      return VISUAL_PERTURBATIONS.map((perturbation) => {
+        return bestVideo('StackCube', [perturbation]);
+      }).filter(Boolean).map((video) => videoSlide(video));
+    }
+    if (kind === 'action') {
+      return SINGLE_ARM_TASKS.concat(BIMANUAL_TASKS).map((task, index) => {
+        return bestVideo(task, rotated(ACTION_PERTURBATIONS, index));
+      }).filter(Boolean).map((video) => videoSlide(video));
+    }
+    const tasks = SINGLE_ARM_TASKS.concat(BIMANUAL_TASKS);
+    return [0, 1, 2, 3].map((kind) => languageSlideForTask('RaiseCube', kind, tasks));
+  }
+
+  function playVisibleCarouselVideos() {
+    document.querySelectorAll('.example-carousel').forEach((panel) => {
+      const slider = panel.querySelector('.slider');
+      if (!slider) return;
+      const bounds = slider.getBoundingClientRect();
+      const onScreen = bounds.bottom > 80 && bounds.top < window.innerHeight - 40;
+      panel.querySelectorAll('video').forEach((video) => {
+        const box = video.getBoundingClientRect();
+        const inFrame = onScreen && box.width > 8 && box.right > bounds.left + 4 && box.left < bounds.right - 4;
+        if (inFrame) {
+          if (!video.getAttribute('src')) video.src = video.dataset.src;
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    });
+  }
+
+  let carouselVideoSyncQueued = false;
+  function queueCarouselVideoSync() {
+    if (carouselVideoSyncQueued) return;
+    carouselVideoSyncQueued = true;
+    window.requestAnimationFrame(() => {
+      carouselVideoSyncQueued = false;
+      playVisibleCarouselVideos();
+    });
+  }
+
+  document.querySelectorAll('.example-carousel').forEach((panel) => {
+    const slides = carouselSlides(panel.dataset.carousel);
+    slides.forEach((slide) => panel.appendChild(slide));
+  });
+
+  bulmaCarousel.attach('.example-carousel', {
+    slidesToScroll: 1,
+    slidesToShow: 3,
+    loop: true,
+    infinite: true,
+    pagination: false,
+    autoplay: false,
+  }).forEach((carousel) => {
+    carousel.on('after:show', queueCarouselVideoSync);
+  });
+
+  document.querySelectorAll('.example-carousel .slider-container').forEach((container) => {
+    container.addEventListener('transitionend', queueCarouselVideoSync);
+  });
+  window.addEventListener('scroll', queueCarouselVideoSync, { passive: true });
+  window.addEventListener('resize', queueCarouselVideoSync);
+  queueCarouselVideoSync();
+
+  function fillRolloutPolicies() {
+    const seen = new Map();
+    rolloutRegistry.videos.forEach((video) => {
+      if (!seen.has(video.policy)) seen.set(video.policy, video.policyLabel);
+    });
+    seen.forEach((label, policy) => {
+      const option = document.createElement('option');
+      option.value = policy;
+      option.textContent = label;
+      rolloutPolicy.appendChild(option);
+    });
+  }
+
+  function fillRolloutEnvs() {
+    const envs = [];
+    rolloutRegistry.videos.forEach((video) => {
+      if (video.policy === rolloutPolicy.value && !envs.includes(video.env)) envs.push(video.env);
+    });
+    envs.sort();
+    rolloutEnv.innerHTML = '';
+    envs.forEach((env) => {
+      const option = document.createElement('option');
+      option.value = env;
+      option.textContent = env;
+      rolloutEnv.appendChild(option);
+    });
+  }
+
+  function addRolloutCard(video, preview) {
+    const key = rolloutKey(video);
+    if (shownRollouts.has(key)) return;
+    shownRollouts.add(key);
+
+    const card = document.createElement('article');
+    card.className = 'rollout-card';
+    card.dataset.key = key;
+    if (preview) card.dataset.preview = 'true';
+
+    const header = document.createElement('header');
+    const caption = document.createElement('p');
+    const policyName = document.createElement('span');
+    policyName.className = 'model-name';
+    policyName.textContent = video.policyLabel;
+    policyName.style.color = modelPolicyColor(video.policy);
+    caption.append(
+      policyName,
+      document.createTextNode(
+        ' · ' + video.env.replace('-v1', '') + ' · ' +
+        video.perturbation + ' · ep ' + video.episode + ' · '
+      )
+    );
+    const outcome = document.createElement('strong');
+    const isSuccess = video.outcome === 'success';
+    outcome.className = 'rollout-outcome ' + (isSuccess ? 'is-success' : 'is-fail');
+    outcome.textContent = isSuccess ? 'Success' : 'Failure';
+    caption.append(outcome);
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'delete';
+    close.setAttribute('aria-label', 'Remove video');
+    close.addEventListener('click', () => {
+      shownRollouts.delete(key);
+      card.remove();
+    });
+    header.append(caption, close);
+
+    const player = document.createElement('video');
+    player.controls = true;
+    player.muted = true;
+    player.loop = true;
+    player.playsInline = true;
+    player.preload = 'metadata';
+    player.src = rolloutUrl(video);
+
+    card.append(header, player);
+    if (preview) {
+      rolloutStage.prepend(card);
+    } else {
+      rolloutStage.appendChild(card);
+    }
+  }
+
+  function fillRolloutPerturbations() {
+    const perturbations = [];
+    rolloutRegistry.videos.forEach((video) => {
+      if (video.policy === rolloutPolicy.value && video.env === rolloutEnv.value && !perturbations.includes(video.perturbation)) {
+        perturbations.push(video.perturbation);
+      }
+    });
+    perturbations.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+    const preferred = perturbations.find((name) => name.toLowerCase() === 'none');
+    rolloutPerturbation.innerHTML = '';
+    perturbations.forEach((name) => {
+      const option = document.createElement('option');
+      option.value = name;
+      option.textContent = name;
+      rolloutPerturbation.appendChild(option);
+    });
+    if (preferred) rolloutPerturbation.value = preferred;
+  }
+
+  function matchingRollouts() {
+    return rolloutRegistry.videos.filter((video) => {
+      return video.policy === rolloutPolicy.value
+        && video.env === rolloutEnv.value
+        && video.perturbation === rolloutPerturbation.value;
+    });
+  }
+
+  function firstRolloutPair(matches) {
+    const chosen = [];
+    ['success', 'fail'].forEach((outcome) => {
+      const match = matches.find((video) => video.outcome === outcome);
+      if (match) chosen.push(match);
+    });
+    matches.some((video) => {
+      if (chosen.includes(video)) return false;
+      chosen.push(video);
+      return chosen.length === 2;
+    });
+    return chosen.slice(0, 2);
+  }
+
+  function refreshPreview() {
+    rolloutStage.querySelectorAll('.rollout-card[data-preview="true"]').forEach((card) => {
+      shownRollouts.delete(card.dataset.key);
+      card.remove();
+    });
+    firstRolloutPair(matchingRollouts()).reverse().forEach((video) => addRolloutCard(video, true));
+  }
+
+  function showRollouts() {
+    rolloutStage.querySelectorAll('.rollout-card[data-preview="true"]').forEach((card) => {
+      card.dataset.preview = 'false';
+    });
+    matchingRollouts().forEach((video) => addRolloutCard(video));
+  }
+
+  if (rolloutPolicy && rolloutStage && rolloutPerturbation) {
+    fillRolloutPolicies();
+    fillRolloutEnvs();
+    fillRolloutPerturbations();
+    rolloutPolicy.addEventListener('change', () => {
+      fillRolloutEnvs();
+      fillRolloutPerturbations();
+      refreshPreview();
+    });
+    rolloutEnv.addEventListener('change', () => {
+      fillRolloutPerturbations();
+      refreshPreview();
+    });
+    rolloutPerturbation.addEventListener('change', refreshPreview);
+    rolloutShow.addEventListener('click', showRollouts);
+    refreshPreview();
+  }
+
   const appendixToggle = document.getElementById('appendix-toggle');
   const appendixPdf = document.getElementById('appendix-pdf');
 
