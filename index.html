@@ -37,8 +37,7 @@
 
     .stat-card,
     .feature-card,
-    .task-card,
-    .result-card {
+    .task-card {
       height: 100%;
       border: 1px solid #e7e7e7;
       border-radius: 16px;
@@ -605,73 +604,10 @@
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">Results and Analysis</h2>
-        <figure class="image mb-5">
-          <img src="content/mean_change_barchart.jpg"
-               alt="Average change in success rate for each perturbation.">
-        </figure>
-        <figure class="image mb-5" style="max-width: 80%; margin-left: auto; margin-right: auto;">
-          <img src="content/radial_two_plots_v2.png"
-               alt="Overall generalization results across vision, language, and action perturbations.">
-        </figure>
-        <div class="columns is-multiline">
-          <div class="column is-half">
-            <div class="box result-card">
-              <h3 class="title is-4">Visual Generalization</h3>
-              <p>
-                <span class="model-name" data-model="ACT">ACT</span> shows larger average success-rate drops under visual perturbations than <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
-                28.57% and 29.06% on the single-arm and bimanual suites, compared with 7.73% and
-                9.86% for <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>. The paper hypothesizes that <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> benefits from larger pretrained
-                visual representations. <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was also evaluated under the same visual perturbations;
-                its raw results are in the appendix.
-              </p>
-            </div>
-          </div>
-
-          <div class="column is-half">
-            <div class="box result-card">
-              <h3 class="title is-4">Language Generalization</h3>
-              <p>
-                Language is tested with four conditions: paraphrase, no instruction, an instruction from
-                another task, and random English words. <span class="model-name" data-model="ACT">ACT</span> barely changes under paraphrase
-                (&minus;0.28% single-arm, &minus;0.57% bimanual), which suggests that it largely ignores language
-                conditioning. Bimanual <span class="model-name" data-model="Pi0.5" data-variant="Bimanual">&pi;<sub>0.5</sub></span> degrades as the instruction leaves the training distribution:
-                &minus;63.6%, &minus;72.2%, &minus;87.8%, and &minus;91.2% for paraphrase, none, other-task, and random.
-                <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was also evaluated on all four language conditions.
-              </p>
-            </div>
-          </div>
-
-          <div class="column is-half">
-            <div class="box result-card">
-              <h3 class="title is-4">Action Generalization</h3>
-              <p>
-                Pose randomization is a primary challenge for <span class="model-name" data-model="ACT">ACT</span> and <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, especially in
-                bimanual tasks where the action space and coordination demands are larger.
-                <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was also evaluated under the action perturbations.
-              </p>
-            </div>
-          </div>
-
-          <div class="column is-half">
-            <div class="box result-card">
-              <h3 class="title is-4">Base Success Rates</h3>
-              <p>
-                With no perturbations, mean success is 29.2% and 44.5% for <span class="model-name" data-model="ACT">ACT</span> on the single-arm
-                and bimanual suites, compared with 21.2% and 12.6% for <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>
-                (1.37&times; and 3.53&times;). <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was also evaluated without perturbations;
-                those results are in the appendix.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="content has-text-justified">
+        <div class="content">
           <p>
-            Across morphologies, perturbations have remarkably consistent effects. The average change
-            in mean absolute success-rate drop between single-arm and bimanual suites is 10.83% for
-            <span class="model-name" data-model="ACT">ACT</span> and 3.69% for <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, indicating that perturbation factors expose model-specific
-            generalization behavior rather than only task-specific artifacts. <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was evaluated
-            on both morphologies as well.
+            Episodes from every policy, task, and perturbation can be viewed in this viewer.
+            Generalization and base success rates are shown below.
           </p>
         </div>
         <div class="box">
@@ -700,6 +636,120 @@
           </div>
         </div>
         <div id="rollout-stage" class="rollout-stage"></div>
+
+        <h3 class="title is-4 mt-6">Generalization</h3>
+        <figure class="image mb-5">
+          <img src="content/mean_change_barchart.jpg"
+               alt="Average change in success rate for each perturbation.">
+        </figure>
+        <figure class="image mb-5" style="max-width: 80%; margin-left: auto; margin-right: auto;">
+          <img src="content/radial_two_plots_v2.png"
+               alt="Overall generalization results across vision, language, and action perturbations.">
+        </figure>
+        <h4 class="title is-5">Visual Generalization</h4>
+        <div class="content">
+          <ul>
+            <li>
+              <span class="model-name" data-model="ACT">ACT</span>:
+              Larger average success-rate drops under visual perturbations:
+              28.57% and 29.06% on the single-arm and bimanual suites.
+            </li>
+            <li>
+              <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
+              Smaller drops of 7.73% and 9.86%.
+              We hypothesize that <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> benefits from larger pretrained visual representations.
+            </li>
+            <li>
+              <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
+              Like <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, strong visual generalization results are demonstrated.
+            </li>
+          </ul>
+        </div>
+
+        <h4 class="title is-5">Language Generalization</h4>
+        <div class="content">
+          <p>
+            Language is tested with four conditions: paraphrase, no instruction, an instruction from
+            another task, and random English words.
+          </p>
+          <ul>
+            <li>
+              <span class="model-name" data-model="ACT">ACT</span>:
+              Barely changes under paraphrase (&minus;0.28% single-arm, &minus;0.57% bimanual),
+              which suggests that it largely ignores language conditioning.
+            </li>
+            <li>
+              <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
+              Significantly degrades task performance as the instruction leaves the training distribution:
+              &minus;63.6%, &minus;72.2%, &minus;87.8%, and &minus;91.2% for paraphrase, none, other-task, and random.
+              The ordering here is significant. Semantically, each of the four perturbations is farther from the training distribution, leading to increasing declines in success rate.
+            </li>
+            <li>
+              <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
+              Nearly negligible change in task performance, indicating that, like <span class="model-name" data-model="ACT">ACT</span>, the language component is ignored.
+            </li>
+          </ul>
+        </div>
+
+        <h4 class="title is-5">Action Generalization</h4>
+        <div class="content">
+          <ul>
+            <li>
+              <span class="model-name" data-model="ACT">ACT</span>:
+              The average relative decrease across the action perturbations is 11.2% (single-arm) and 18.24% (bimanual).
+              <span class="listed-name">pose_randomization</span> is the primary contributor, at 21.8% and 40.9%.
+              The bimanual drop is larger. We hypothesize this comes from greater spatial reasoning demands in the larger action space, and from joint-space control rather than the 6-DOF cartesian control used on the single-arm suite.
+            </li>
+            <li>
+              <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
+              The average relative decrease is 4.11% (single-arm) and 10.08% (bimanual).
+              Under <span class="listed-name">pose_randomization</span> the decreases are 12.9% and 51.4%, again larger for bimanual tasks.
+              <span class="listed-name">MO_size</span> is neutral or positive: a larger manipulated object often makes the task easier, as in ScoopBanana.
+            </li>
+            <li>
+              <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
+              On tasks with no-perturbation success of at least 10%, the mean relative change across the action perturbations is +5.6% (single-arm) and &minus;23.3% (bimanual).
+              <span class="listed-name">pose_randomization</span> drops success by 29.8% and 27.4%.
+              <span class="listed-name">MO_size</span> is nearly neutral on the single-arm suite (&minus;3.5%) and a 31.5% drop on bimanual.
+              <span class="listed-name">RO_size</span> is +50% on the one included single-arm task (ScoopBanana) and &minus;11.1% on bimanual.
+            </li>
+          </ul>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Across morphologies, perturbations have remarkably consistent effects. The average change
+            in mean absolute success-rate drop between single-arm and bimanual suites is 10.83% for
+            <span class="model-name" data-model="ACT">ACT</span> and 3.69% for <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, indicating that perturbation factors expose model-specific
+            generalization behavior rather than only task-specific artifacts. <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> was evaluated
+            on both morphologies as well.
+          </p>
+        </div>
+
+        <h3 class="title is-4 mt-6">Base Success Rates</h3>
+        <figure class="image mb-5">
+          <img src="content/waterfall_plot.png"
+               alt="Per-task success rates with no perturbations, ordered by success rate, for the single-arm and bimanual suites.">
+        </figure>
+        <div class="content">
+          <ul>
+              <li>
+                <span class="model-name" data-model="ACT">ACT</span>:
+                With no perturbations, mean success is 29.2% and 44.5% on the single-arm and bimanual suites.
+                That is higher than both <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> and <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
+                1.37&times; and 3.53&times; versus <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>, and 1.11&times; and 7.30&times; versus <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>.
+                This indicates a specialist versus generalist tradeoff. The two VLA models are more generally capable and more robust to environmental perturbations, but they perform worse on these tasks.
+              </li>
+              <li>
+                <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span>:
+                Mean success is 21.2% and 12.6% on the single-arm and bimanual suites.
+              </li>
+              <li>
+                <span class="model-name" data-model="MolmoAct2">MolmoAct2</span>:
+                Mean success with no perturbations is 26.4% on the 12 reported single-arm tasks and 6.1% on the seven bimanual tasks with a no-perturbation score.
+              </li>
+            </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -710,7 +760,38 @@
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">Hardware Validation</h2>
-        <div class="box">
+        <div class="content has-text-justified">
+          <p>
+            To test whether simulation captures real-world robustness, five single-arm parallel-jaw tasks are reproduced on hardware:
+            <span class="listed-name">RaiseCube</span>, <span class="listed-name">RotateArrow</span>, <span class="listed-name">LiftPegUpright</span>, <span class="listed-name">PickDishFromRack</span>, and <span class="listed-name">PickSodaFromCabinet</span>.
+            A single multitask <span class="model-name" data-model="ACT">ACT</span> policy is trained from scratch with 60 demonstrations per task.
+            Each task is evaluated under <span class="listed-name">none</span>, <span class="listed-name">MO_size</span>, <span class="listed-name">MO_color</span>, <span class="listed-name">background_color</span>, <span class="listed-name">light_color</span>, <span class="listed-name">language_none</span>, and <span class="listed-name">table_color</span>, with 20 trials per task-condition pair.
+          </p>
+        </div>
+        <figure class="image mb-5" style="width: 80%; margin-left: auto; margin-right: auto;">
+          <img src="content/hardware_vs_sim.jpg"
+               alt="Simulation versus hardware success rates across five tasks. Simulation does not perfectly predict absolute hardware success, but it captures the overall trends across perturbations.">
+        </figure>
+        <h3 class="title is-4">Results</h3>
+        <div class="content has-text-justified">
+          <p>
+            Real-world experiments indicate that Colosseum V2 does not precisely predict the absolute success rate on hardware for a particular task. 
+            However, this is not true in aggregate as for all (sim, real) success pairs, the best-fit relationship is SR<sub>sim</sub> = 0.86 &times; SR<sub>real</sub> + 15.1.
+            This trendline is relatively close to SR<sub>sim</sub> = SR<sub>real</sub>, illustrating the general trend is followed despite noise on a per task basis.
+          </p>
+        </div>
+        <figure class="image mb-5" style="width: 80%; margin-left: auto; margin-right: auto;">
+          <img src="content/hardware_vs_sim_percent_of_none_average.jpg"
+               alt="Relative robustness under each perturbation, normalized by the no-perturbation success rate and averaged across the five hardware tasks. Error bars are one standard deviation across tasks.">
+        </figure>
+        <div class="content has-text-justified">
+          <p>
+            The <i>relative</i> effects of perturbations, measured against the no-perturbation baseline, are well preserved between simulation and hardware.
+            After normalizing each perturbation by the corresponding no-perturbation success rate, the mean absolute difference between simulation and hardware is 12.3 percentage points.
+            Colosseum V2 therefore estimates the relative robustness of a manipulation policy under distribution shift even when absolute success differs.
+          </p>
+        </div>
+        <div class="box mt-5">
           <div class="field">
             <label class="label" for="hardware-video-select">Hardware Video</label>
             <div class="control">
@@ -742,38 +823,6 @@
             Your browser does not support the video tag.
           </video>
         </div>
-        <div class="columns is-vcentered">
-          <div class="column is-half">
-            <figure class="image">
-              <img src="content/hardware_vs_sim.jpg"
-                   alt="Simulation versus hardware success rate comparison.">
-            </figure>
-          </div>
-          <div class="column is-half">
-            <div class="content has-text-justified">
-              <p>
-                To test whether simulation captures real-world robustness, five single-arm tasks are
-                reproduced on hardware: RaiseCube, RotateArrow, LiftPegUpright, PickDishFromRack, and
-                PickSodaFromCabinet. A multitask <span class="model-name" data-model="ACT">ACT</span> policy is trained from scratch with 60 demonstrations
-                per task. Each task is evaluated under no perturbation, MO_size, MO_color, background_color,
-                light_color, Language-None, and table_color, with 20 trials per task-condition pair.
-                <span class="model-name" data-model="MolmoAct2">MolmoAct2</span> and <span class="model-name" data-model="Pi0.5">&pi;<sub>0.5</sub></span> were evaluated in simulation; this hardware study uses <span class="model-name" data-model="ACT">ACT</span>.
-              </p>
-              <p>
-                Simulation does not precisely predict absolute hardware success. Across 35 task-perturbation
-                pairs, R<sup>2</sup> = 0.49, and the best-fit line is
-                SR<sub>sim</sub> = 0.86 &times; SR<sub>real</sub> + 15.1.
-                Relative robustness is preserved: after normalizing each perturbation by the
-                no-perturbation success rate, the mean absolute difference between simulation and hardware
-                is 12.3 percentage points.
-              </p>
-            </div>
-          </div>
-        </div>
-        <figure class="image mt-5">
-          <img src="content/hardware_vs_sim_percent_of_none_average.jpg"
-               alt="Relative robustness under each perturbation in simulation and on hardware.">
-        </figure>
       </div>
     </div>
   </div>
