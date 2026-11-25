@@ -2,7 +2,11 @@
 .idea
 Colosseum_v2/
 content/hardware_videos/*.mov
-content/policy_episodes/
+# policy rollouts: only the re-encoded subset is published
+content/policy_episodes/**
+!content/policy_episodes/**/
+!content/policy_episodes/**/*.compressed.mp4
+content/policy_video_registry.full.json
 Colosseum_v2_overleaf/
 ColosseumV2/
 xpost.md
